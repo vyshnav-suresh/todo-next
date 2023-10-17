@@ -3,14 +3,17 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
 import { getError } from '@/utils/error';
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
-
+  const session =useSession()
     // Assuming you are using next-auth for authentication
+    if(session.status=='authenticated'){
+      router.push('/dashboard')
+    }
     const submitHandler = async () => {
         console.log('hello');
         try {
@@ -19,14 +22,14 @@ function Login() {
             email,
             password,
           });
-          if (result.error) {
-            console.log(result.error);
+          // if (result.error) {
+          //   console.log(result.error);
 
-            // toast.error(result.error);
-          }else{
+          //   // toast.error(result.error);
+          // }else{
             toast.success('User login successful');
             router.push('/dashboard')
-          }
+          // }
         } catch (err) {
           toast.error(getError(err));
           console.log(getError(err));
@@ -70,7 +73,7 @@ function Login() {
           <div className="flex items-center justify-between">
             <button
               className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              type="submit"
+              // type="submit"
               onClick={submitHandler}
             >
               Sign In

@@ -51,11 +51,8 @@ const taskSchema = new mongoose.Schema({
 });
 
 const User = mongoose.models.User || mongoose.model('User', userSchema);
-export default User;
-// Create User and Task models
 const Task = mongoose.models.Task|| mongoose.model('Task', taskSchema);
+export {User,Task}
+// Create User and Task models
 
-module.exports = {
-  User,
-  Task,
-};
+
